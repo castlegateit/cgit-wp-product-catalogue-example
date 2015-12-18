@@ -21,14 +21,14 @@ License: MIT
  */
 add_filter('cgit_product_fields', function($fields) {
     $fields['fields'][] = array(
-        'label' => 'Size',
-        'name' => 'size',
-        'key' => 'size',
+        'label' => 'Manufacturer',
+        'name' => 'manufacturer',
+        'key' => 'manufacturer',
         'type' => 'radio',
         'choices' => array(
-            'small' => 'Small',
-            'medium' => 'Medium',
-            'large' => 'Large',
+            'nintendo' => 'Nintendo',
+            'sony' => 'Sony',
+            'sega' => 'Sega',
         ),
     );
 
@@ -43,7 +43,7 @@ add_filter('cgit_product_fields', function($fields) {
  * default search value for any product-related custom fields.
  */
 add_filter('cgit_product_default_args', function($args) {
-    $args['size'] = false;
+    $args['manufacturer'] = false;
     return $args;
 });
 
@@ -53,13 +53,13 @@ add_filter('cgit_product_default_args', function($args) {
  * This function converts an argument or query string into the correct WordPress
  * meta query for the custom field(s). Combined with the default arguments
  * function above, this allow searches to include parameters such as
- * `?size=medium`.
+ * `?manufacturer=nintendo`.
  */
 add_filter('cgit_product_meta_query', function($meta_query, $args) {
-    if (isset($args['size']) && $args['size']) {
+    if (isset($args['manufacturer']) && $args['manufacturer']) {
         $meta_query[] = array(
-            'key' => 'size',
-            'value' => $args['size'],
+            'key' => 'manufacturer',
+            'value' => $args['manufacturer'],
             'compare' => '=',
         );
     }
@@ -68,13 +68,24 @@ add_filter('cgit_product_meta_query', function($meta_query, $args) {
 }, 10, 2);
 
 /**
+ * Add custom field to product properties
+ *
+ * This filters converts an associative array into additional properties on the
+ * Cgit\Product object.
+ */
+add_filter('cgit_product_properties', function($args, $id) {
+    $args['product_manufacturer'] = get_field('manufacturer', $id);
+    return $args;
+}, 10, 2);
+
+/**
  * Replace default search form
  *
  * This form will be used as the output of the cgit_product_search_form()
  * function, the product_search shortcode, and the product search widget.
  */
-add_filter('cgit_product_search_form', function() {
+add_filter('cgit_product_render_search', function() {
     ob_start();
-    include dirname(__FILE__) . '/views/search-form.php';
+    include dirname(__FILE__) . '/views/search.php';
     return ob_get_clean();
 });

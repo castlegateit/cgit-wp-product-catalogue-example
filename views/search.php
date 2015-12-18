@@ -20,11 +20,11 @@
         </p>
 
         <p>
-            <label for="product_size">Size</label>
-            <select name="size" id="product_size">
-                <option value="small">Small</option>
-                <option value="medium">Medium</option>
-                <option value="large">Large</option>
+            <label for="product_manufacturer">Manufacturer</label>
+            <select name="manufacturer" id="product_manufacturer">
+                <option value="nintendo">Nintendo</option>
+                <option value="sega">Sega</option>
+                <option value="sony">Sony</option>
             </select>
         </p>
 
