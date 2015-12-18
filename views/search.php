@@ -22,6 +22,7 @@
         <p>
             <label for="product_manufacturer">Manufacturer</label>
             <select name="manufacturer" id="product_manufacturer">
+                <option value="">Any</option>
                 <option value="nintendo"<?= get_query_var('manufacturer') == 'nintendo' ? ' selected' : '' ?>>Nintendo</option>
                 <option value="sega"<?= get_query_var('manufacturer') == 'sega' ? ' selected' : '' ?>>Sega</option>
                 <option value="sony"<?= get_query_var('manufacturer') == 'sony' ? ' selected' : '' ?>>Sony</option>
